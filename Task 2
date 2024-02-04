@@ -1,0 +1,68 @@
+import java.util.*;
+
+public class GradeCalculator {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Student Grade Calculator!!");
+        System.out.println("\n\nEnter  marks obtained(out of 100) :");
+
+        System.out.print("AM-1: ");
+        int subject1 = sc.nextInt();
+
+        System.out.print("CG: ");
+        int subject2 = sc.nextInt();
+
+        System.out.print("DMS: ");
+        int subject3 = sc.nextInt();
+
+        System.out.print("DS: ");
+        int subject4 = sc.nextInt();
+
+        System.out.print("UHV: ");
+        int subject5 = sc.nextInt();
+
+        int totalMarks = subject1 + subject2 + subject3 + subject4 + subject5;
+
+        double averagePercentage = totalMarks / 5.0;
+
+      
+        String grade;
+        if (averagePercentage >= 90) {
+            grade = "A";
+        } else if (averagePercentage >= 80 && averagePercentage < 90) {
+            grade = "B";
+        } else if (averagePercentage >= 70 && averagePercentage < 80) {
+            grade = "C";
+        } else if (averagePercentage >= 60 && averagePercentage < 70) {
+            grade = "D";
+        } else {
+            grade = "F";
+        }
+
+        System.out.println("\nHere are the Results:");
+        System.out.println("\nTotal Marks: " + totalMarks);
+        System.out.println("Average Percentage: " + averagePercentage + "%");
+        System.out.println("Grade: " + grade);
+        
+        if(grade=="A"){
+        System.out.println("Great work!Keep it up.");
+        }
+        else if(grade=="B"){
+        System.out.println("Good but can still improve ");
+        }
+        else if(grade=="C"){
+        System.out.println("Performance is average.");
+        }
+        else if(grade=="D"){
+        System.out.println("Below average performance.Need a lot a hardwork!");
+        }
+       else
+       {
+        System.out.println("FAIL!!");
+       }
+
+        sc.close();
+    }
+}
