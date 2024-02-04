@@ -1,1 +1,60 @@
+import java.util.Scanner;
+import java.util.Random;
 
+public class NumberGame {
+
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.println("Welcome to the Number Game!");
+       
+        do {
+            int maxNumber = 100;
+            int randomNumber = random.nextInt(maxNumber) + 1;
+            int maxAttempts = 7;
+            int Guess;
+            int attempts = 0;
+
+            System.out.println("\nI have selected a random number between 1 and 100.");
+            System.out.println("You have " + maxAttempts + " attempts to guess the correct number.\n\nYou can press 0 if you wish to exit");
+            System.out.println("Here you go..!");
+
+            while (attempts < maxAttempts) {
+                System.out.println("Enter your guess : ");
+                Guess = sc.nextInt();
+                attempts++;
+
+                if (Guess == 0) {
+                    System.out.println("Thanks for playing! Exiting the game.");
+                    System.exit(0);
+                }
+
+                if (Guess == randomNumber) {
+                    System.out.println("Great! You guessed the correct number in " + attempts + " attempts.");
+                    break;
+                } else if (Guess < randomNumber) {
+                    System.out.println("Try  for a higher number.");
+                } else {
+                    System.out.println("Try for  a lower number.");
+                }
+            }
+
+            if (attempts == maxAttempts) {
+                System.out.println("Ohh!You're attempts are over.The correct number was: " + randomNumber);
+            }
+
+            System.out.print("Do you wish  to play again? (yes/no): ");
+            String playAgain = sc.next().toLowerCase();
+
+            if (playAgain.equals("no")) {
+                System.out.println("Thanks for playing! Exiting the game.");
+                break;
+            }
+
+        } while (true);
+
+        sc.close();
+    }
+}
