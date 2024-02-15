@@ -1,0 +1,68 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CurrencyConverter {
+    private static final String API_URL = "https://api.exchangerate-api.com/v4/latest/";
+
+    public static void main(String[] args) {
+        System.out.println("\t\t  Welcome to the currency converter!");
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            
+            System.out.print("Enter the base currency you wish to convert : ");
+            String baseCurrency = reader.readLine().toUpperCase();
+
+            
+            System.out.print("Enter your target currency(eg.USD): ");
+            String targetCurrency = reader.readLine().toUpperCase();
+
+            
+            System.out.print("Enter amount to convert: ");
+            double amount = Double.parseDouble(reader.readLine());
+
+            
+            Map<String, Double> exchangeRates = fetchExchangeRates(baseCurrency);
+
+            
+            double exchangeRate = exchangeRates.get(targetCurrency);
+            double convertedAmount = amount * exchangeRate;
+
+    
+            System.out.printf("%.2f %s = %.2f %s\n", amount, baseCurrency, convertedAmount, targetCurrency);
+
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Map<String, Double> fetchExchangeRates(String baseCurrency) throws IOException {
+        Map<String, Double> exchangeRates = new HashMap<>();
+        URL url = new URL(API_URL + baseCurrency);
+        URLConnection connection = url.openConnection();
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            
+            if (inputLine.contains("\"rates\":")) {
+                String[] parts = inputLine.split("\"rates\":\\{")[1].split("}")[0].split(",");
+                for (String part : parts) {
+                    String[] keyValue = part.split(":");
+                    exchangeRates.put(keyValue[0].replace("\"", ""), Double.parseDouble(keyValue[1]));
+                }
+                break;
+            }
+        }
+        in.close();
+
+        return exchangeRates;
+    }
+}
+
